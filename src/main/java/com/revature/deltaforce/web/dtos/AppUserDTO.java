@@ -1,30 +1,26 @@
 package com.revature.deltaforce.web.dtos;
 
 import com.revature.deltaforce.datasources.models.AppUser;
-import io.jsonwebtoken.Claims;
 import lombok.Data;
 
 import java.util.HashSet;
 
 @Data
-public class Principal {
+public class AppUserDTO {
 
     private String id;
+    private String firstName;
+    private String lastName;
+    private String email;
     private String username;
-    private String role;
     private HashSet<String> favTopics;
 
-    public Principal(AppUser subject) {
+    public AppUserDTO(AppUser subject) {
         this.id = subject.getId();
+        this.firstName = subject.getFirstName();
+        this.lastName = subject.getLastName();
+        this.email = subject.getEmail();
         this.username = subject.getUsername();
-        this.role = subject.getRole();
         this.favTopics = subject.getFavTopics();
     }
-
-    public Principal(Claims jwtClaims) {
-        this.id = jwtClaims.getId();
-        this.username = jwtClaims.getSubject();
-        this.role = jwtClaims.get("role", String.class);
-    }
 }
-

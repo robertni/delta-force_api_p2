@@ -19,22 +19,19 @@ public class TokenGenerator {
     }
 
     public String createToken(Principal subject) {
-
         long now = System.currentTimeMillis();
 
         JwtBuilder tokenBuilder = Jwts.builder()
                 .setId(subject.getId())
                 .setSubject(subject.getUsername())
-                // .claim("role", subject.getRole().toString()) // specify the role of the user for whom this token is for
+                .claim("role", subject.getRole()) // specify the role of the user for whom this token is for
                 .setIssuer("revature")
                 .setIssuedAt(new Date(now))
                 .setExpiration(new Date(now + jwtConfig.getExpiration()))
                 .signWith(jwtConfig.getSigAlg(), jwtConfig.getSigningKey());
 
         return jwtConfig.getPrefix() + tokenBuilder.compact();
-
     }
-
     public String getJwtHeader() {
         return jwtConfig.getHeader();
     }
@@ -42,5 +39,4 @@ public class TokenGenerator {
     public JwtConfig getJwtConfig() {
         return jwtConfig;
     }
-
 }
